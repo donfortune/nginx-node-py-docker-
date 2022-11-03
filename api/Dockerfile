@@ -1,20 +1,10 @@
+FROM python:3.8
 
-FROM python:3
-ENV PYTHONUNBUFFERED 1
+WORKDIR /api
 
-ARG DJANGO_ALLOWED_HOSTS
-ARG DJANGO_SECRET_KEY
-ARG DJANGO_CORS_ORIGIN_WHITELIST
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-ENV DJANGO_ALLOWED_HOSTS $DJANGO_ALLOWED_HOSTS
-ENV DJANGO_SECRET_KEY $DJANGO_SECRET_KEY
-ENV DJANGO_CORS_ORIGIN_WHITELIST $DJANGO_CORS_ORIGIN_WHITELIST
+COPY . .
 
-RUN mkdir /backend
-WORKDIR /backend
-COPY requirements.txt /backend/
-EXPOSE 8000
-RUN pip install -r requirements.txt
-COPY . /backend/
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000"]
