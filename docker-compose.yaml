@@ -14,7 +14,7 @@ services:
     volumes:
       - build_folder:/react/build
   nginx:
-    image: nginx:latest
+    image: nginx:latest. #nginx image
     ports:
       - 80:8080
     volumes:
